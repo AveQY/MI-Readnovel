@@ -1,0 +1,615 @@
+require "import"
+import "android.app.*"
+import "android.os.*"
+import "android.widget.*"
+import "android.view.*"
+import "function"
+
+activity.setTheme(R.Theme_Teal)
+Dial_lay={
+  LinearLayout;
+  layout_height="match_parent";
+  layout_width="match_parent";
+  orientation="vertical";
+  {
+    CardView;
+    backgroundColor="0xFFFFFFFF";
+    CardElevation="0dp";
+    radius="0dp";
+    layout_height="wrap";
+    layout_width="match_parent";
+    {
+      LinearLayout;
+      layout_width="match_parent";
+      layout_marginTop="30dp";
+      {
+        LinearLayout;
+        gravity="center";
+        layout_height="8%h";
+        layout_width="match_parent";
+        orientation="horizontal";
+        layout_marginLeft="15dp";
+        {
+          LinearLayout;
+          layout_height="match_parent";
+          layout_width="match_parent";
+          orientation="vertical";
+          {
+            TextView;
+            textColor="#757575";
+            textSize="23dp";
+            layout_height="20dp";
+            layout_width="match_parent";
+            id="title";
+            gravity="center|left";
+            layout_weight="1";
+            singleLine=true;
+            layout_marginLeft="15dp";
+            text="表盘商城";
+          };
+          {
+            TextView;
+            textColor="#a5a5a5";
+            textSize="13dp";
+            layout_height="10dp";
+            layout_width="match_parent";
+            id="yiyan";
+            gravity="center|left";
+            layout_weight="1";
+            singleLine=true;
+            layout_marginLeft="15dp";
+            text="";
+          };
+        };
+      };
+    };
+  };
+  {
+    LinearLayout;
+    gravity="center";
+    layout_height="fill";
+    layout_width="fill";
+    backgroundColor=0xffffffff;
+    {
+      PullingLayout;
+      id="pull";
+      --PullDownEnabled=true;
+      PullUpEnabled=true;
+      layout_width="fill";
+      {
+        ListView;
+        id="表盘列表";
+        DividerHeight=0;
+        verticalScrollBarEnabled=false;
+        layout_gravity="end";
+        layout_width="fill";
+      };
+    };
+  },
+};
+items={
+  LinearLayout,
+  layout_width="fill",
+  orientation="horizontal",
+  gravity="center|left",
+  background="#ffffff";
+  {
+    ImageView,
+    id="img",
+    layout_width="30dp",
+    layout_height="70dp",
+    layout_marginTop="25dp",
+    layout_marginBottom="25dp",
+    layout_marginLeft="20dp",
+  },
+  {
+    LinearLayout,
+    layout_width="fill",
+    layout_marginLeft="50dp",
+    layout_marginTop="25dp",
+    layout_marginBottom="25dp",
+    layout_marginRight="10dp",
+    orientation="horizontal",
+    layout_height="fill",
+    gravity="center|left",
+    {
+      TextView,
+      id="title",
+      textSize="19sp",
+      textColor="#757575",
+      layout_width='45%w';
+    },
+    {
+      TextView,
+      id="title2",
+      layout_height="0dp",
+      layout_width="0dp",
+    },
+    {
+      TextView,
+      id="title3",
+      layout_height="0dp",
+      layout_width="0dp",
+    },
+  },
+}
+activity.setContentView(loadlayout(Dial_lay))
+activity.ActionBar.hide()
+状态栏()
+
+activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+
+function 下载表盘(表盘名称,文件链接,图片链接,内容,高度)
+  import "android.graphics.Typeface"
+  弹窗框架={
+    LinearLayout,
+    orientation='vertical',
+    layout_width='fill',
+    layout_height='wrap',
+    {
+      CardView;
+      layout_margin='8dp';
+      layout_gravity='center';
+      elevation='5dp';
+      layout_width='90%w';
+      layout_height='fill';
+      CardBackgroundColor='0xfffFFFFF';
+      radius='10dp';
+      {
+        LinearLayout,
+        gravity='center';
+        orientation='vertical',
+        layout_width='fill',
+        layout_height='wrap',
+        background='#00FFFFFF',
+        {
+          LinearLayout;
+          orientation="vertical";
+          gravity="center";
+          layout_height="fill";
+          layout_width="fill";
+          layout_marginTop="15dp",
+          {
+            FrameLayout;
+            layout_height="200dp";
+            layout_width="200dp";
+            {
+              ImageView;
+              layout_width="200dp";
+              layout_height="200dp";
+              src="res/band.png";
+            };
+            {
+              LinearLayout;
+              orientation="vertical";
+              gravity="center";
+              layout_height="fill";
+              layout_width="fill";
+              {
+                ImageView;
+                layout_marginBottom="10dp";
+                src=图片链接,
+                id="img_",
+              };
+            };
+          };
+        };
+        {
+          LinearLayout,
+          layout_padding='10%';
+          gravity='left|center';
+          orientation='vertical',
+          layout_width='fill',
+          layout_height=高度,
+          background='#ffffffff',
+          {
+            ScrollView;
+            layout_width='fill';
+            layout_height='fill';
+            verticalScrollBarEnabled=false,
+            overScrollMode=View.OVER_SCROLL_NEVER,
+            {
+              TextView;
+              padding="20dp",
+              ellipsize="end";
+              layout_width='fill';
+              layout_height='fill';
+              textColor='#FF888888';
+              text=内容;
+              textSize='15dp';
+              gravity='center|left|top';
+              id="内容",
+            };
+          };
+        };
+        {
+          TextView,
+          layout_width="fill",
+          layout_height="2px",
+          layout_gravity="center",
+          backgroundColor="#ffbebebe",
+        };
+        {
+          LinearLayout,
+          orientation='horizontal',
+          layout_width='fill',
+          layout_height='13%w',
+          background='#00FFFFFF',
+          {
+            LinearLayout,
+            orientation='vertical',
+            layout_width='45%w',
+            layout_height='fill',
+            background='#00FFFFFF',
+            {
+              TextView;
+              gravity='center';
+              layout_width='fill';
+              layout_height='fill';
+              textColor='#eb000000';
+              text="关闭";
+              textSize='16dp';
+              id="取消"
+            };
+          };
+          {
+            TextView,--垂直分割线
+            layout_width="2px",--布局宽度
+            layout_height="fill",
+            layout_gravity="center",
+            backgroundColor="#ffbebebe",
+          };
+          {
+            TextView,
+            layout_width="0px",
+            layout_height="fill",
+            layout_gravity="center",
+            backgroundColor="#ffbebebe",
+          };
+          {
+            LinearLayout,
+            orientation='vertical',
+            layout_width='45%w',
+            layout_height='fill',
+            background='#00000000',
+            {
+              TextView;
+              gravity='center';
+              layout_width='fill';
+              layout_height='fill';
+              textColor='#FF147CE4';
+              textSize='16dp';
+              id="确认",
+              text="下载";
+            };
+          };
+        };
+      };
+    };
+  };
+  xxx=AlertDialog.Builder(this)
+  xxx.setView(loadlayout(弹窗框架))
+  xxx=xxx.show()
+  import "android.graphics.drawable.ColorDrawable"
+  xxx.getWindow().setBackgroundDrawable(ColorDrawable(0x00000000))
+  function 波纹特效v2(颜色)
+    import"android.content.res.ColorStateList"
+    return activity.Resources.getDrawable(activity.obtainStyledAttributes({android.R.attr.selectableItemBackground--[[Borderless]]}).getResourceId(0,0))
+    .setColor(ColorStateList(int[0]
+    .class{int{}},int{颜色 or 0x20000000}))
+  end
+  确认.onClick=function()
+    if 确认.Text=="下载" then
+      if File("/storage/emulated/0/Android/data/com.xiaomi.hm.health/files/watch_skin_local/hgBiCZWkLc7VL7dKL2xOtX9g6v46sRoLpOMBJnnq/").isDirectory() then
+       else
+        File("/storage/emulated/0/Android/data/com.xiaomi.hm.health/files/watch_skin_local/hgBiCZWkLc7VL7dKL2xOtX9g6v46sRoLpOMBJnnq/").mkdirs()
+      end
+      确认.Text="下载中"
+      蓝奏云解析(文件链接,"xnsn",function(body)
+        path="/storage/emulated/0/Android/data/com.xiaomi.hm.health/files/watch_skin_local/hgBiCZWkLc7VL7dKL2xOtX9g6v46sRoLpOMBJnnq/hgBiCZWkLc7VL7dKL2xOtX9g6v46sRoLpOMBJnnq.bin"
+        LuaUtil.copyDir(activity.getLuaDir().."/"..图片链接,"/storage/emulated/0/Android/data/com.xiaomi.hm.health/files/watch_skin_local/hgBiCZWkLc7VL7dKL2xOtX9g6v46sRoLpOMBJnnq/nCK4a4uskClxEVYx4gJT1Jt3GOEsTCka.png")
+        init=io.open(activity.getLuaDir().."/res/infos.xml"):read("*a")
+        init1=string.gsub(init,'表盘',表盘名称)
+        path2="/storage/emulated/0/Android/data/com.xiaomi.hm.health/files/watch_skin_local/hgBiCZWkLc7VL7dKL2xOtX9g6v46sRoLpOMBJnnq/infos.xml"
+        io.open(path2,"w"):write(init1):close()
+        Http.download(body,path,function(code,data,cookie,header)
+          确认.Text="下载完成"
+        end)
+      end)
+     else --xxx.dismiss()
+    end
+  end;
+  取消.onClick=function()
+    xxx.dismiss()
+  end;
+  确认.foreground=波纹特效v2(0xFFCECECE)
+  取消.foreground=波纹特效v2(0xFFCECECE)
+end
+function 下载表盘2(表盘名称,文件链接,图片链接,内容,高度)
+  import "android.graphics.Typeface"
+  弹窗框架={
+    LinearLayout,
+    orientation='vertical',
+    layout_width='fill',
+    layout_height='wrap',
+    {
+      CardView;
+      layout_margin='8dp';
+      layout_gravity='center';
+      elevation='5dp';
+      layout_width='90%w';
+      layout_height='fill';
+      CardBackgroundColor='0xfffFFFFF';
+      radius='10dp';
+      {
+        LinearLayout,
+        gravity='center';
+        orientation='vertical',
+        layout_width='fill',
+        layout_height='wrap',
+        background='#00FFFFFF',
+        {
+          LinearLayout;
+          orientation="vertical";
+          gravity="center";
+          layout_height="fill";
+          layout_width="fill";
+          layout_marginTop="15dp",
+          {
+            FrameLayout;
+            layout_height="200dp";
+            layout_width="200dp";
+            {
+              ImageView;
+              layout_width="200dp";
+              layout_height="200dp";
+              src="res/band.png";
+            };
+            {
+              LinearLayout;
+              orientation="vertical";
+              gravity="center";
+              layout_height="fill";
+              layout_width="fill";
+              {
+                ImageView;
+                layout_marginBottom="10dp";
+                src=图片链接,
+              };
+            };
+          };
+        };
+        {
+          LinearLayout,
+          layout_padding='10%';
+          gravity='left|center';
+          orientation='vertical',
+          layout_width='fill',
+          layout_height=高度,
+          background='#ffffffff',
+          {
+            ScrollView;
+            layout_width='fill';
+            layout_height='fill';
+            verticalScrollBarEnabled=false,
+            overScrollMode=View.OVER_SCROLL_NEVER,
+            {
+              TextView;
+              padding="20dp",
+              ellipsize="end";
+              layout_width='fill';
+              layout_height='fill';
+              textColor='#FF888888';
+              text=内容;
+              textSize='15dp';
+              gravity='center|left|top';
+              id="内容",
+            };
+          };
+        };
+        {
+          TextView,
+          layout_width="fill",
+          layout_height="2px",
+          layout_gravity="center",
+          backgroundColor="#ffbebebe",
+        };
+        {
+          LinearLayout,
+          orientation='horizontal',
+          layout_width='fill',
+          layout_height='13%w',
+          background='#00FFFFFF',
+          {
+            LinearLayout,
+            orientation='vertical',
+            layout_width='45%w',
+            layout_height='fill',
+            background='#00FFFFFF',
+            {
+              TextView;
+              gravity='center';
+              layout_width='fill';
+              layout_height='fill';
+              textColor='#eb000000';
+              text="关闭";
+              textSize='16dp';
+              id="取消"
+            };
+          };
+          {
+            TextView,--垂直分割线
+            layout_width="2px",--布局宽度
+            layout_height="fill",
+            layout_gravity="center",
+            backgroundColor="#ffbebebe",
+          };
+          {
+            TextView,
+            layout_width="0px",
+            layout_height="fill",
+            layout_gravity="center",
+            backgroundColor="#ffbebebe",
+          };
+          {
+            LinearLayout,
+            orientation='vertical',
+            layout_width='45%w',
+            layout_height='fill',
+            background='#00000000',
+            {
+              TextView;
+              gravity='center';
+              layout_width='fill';
+              layout_height='fill';
+              textColor='#FF147CE4';
+              textSize='16dp';
+              id="确认",
+              text="下载";
+            };
+          };
+        };
+      };
+    };
+  };
+  xxx=AlertDialog.Builder(this)
+  xxx.setView(loadlayout(弹窗框架))
+  xxx=xxx.show()
+  import "android.graphics.drawable.ColorDrawable"
+  xxx.getWindow().setBackgroundDrawable(ColorDrawable(0x00000000))
+  function 波纹特效v2(颜色)
+    import"android.content.res.ColorStateList"
+    return activity.Resources.getDrawable(activity.obtainStyledAttributes({android.R.attr.selectableItemBackground--[[Borderless]]}).getResourceId(0,0))
+    .setColor(ColorStateList(int[0]
+    .class{int{}},int{颜色 or 0x20000000}))
+  end
+  确认.onClick=function()
+    if 确认.Text=="下载" then
+      if File("/storage/emulated/0/Android/data/com.xiaomi.hm.health/files/watch_skin_local/hgBiCZWkLc7VL7dKL2xOtX9g6v46sRoLpOMBJnnq/").isDirectory() then
+       else
+        File("/storage/emulated/0/Android/data/com.xiaomi.hm.health/files/watch_skin_local/hgBiCZWkLc7VL7dKL2xOtX9g6v46sRoLpOMBJnnq/").mkdirs()
+      end
+      确认.Text="下载中"
+      蓝奏云解析(文件链接,"xnsn",function(body)
+        path="/storage/emulated/0/Android/data/com.xiaomi.hm.health/files/watch_skin_local/hgBiCZWkLc7VL7dKL2xOtX9g6v46sRoLpOMBJnnq/hgBiCZWkLc7VL7dKL2xOtX9g6v46sRoLpOMBJnnq.bin"
+        path3="/storage/emulated/0/Android/data/com.xiaomi.hm.health/files/watch_skin_local/hgBiCZWkLc7VL7dKL2xOtX9g6v46sRoLpOMBJnnq/nCK4a4uskClxEVYx4gJT1Jt3GOEsTCka.png"
+        Http.download(图片链接,path3,function(code,data,cookie,header)
+        end)
+        init=io.open(activity.getLuaDir().."/res/infos.xml"):read("*a")
+        init1=string.gsub(init,'表盘',表盘名称)
+        path2="/storage/emulated/0/Android/data/com.xiaomi.hm.health/files/watch_skin_local/hgBiCZWkLc7VL7dKL2xOtX9g6v46sRoLpOMBJnnq/infos.xml"
+        io.open(path2,"w"):write(init1):close()
+        Http.download(body,path,function(code,data,cookie,header)
+          确认.Text="下载完成"
+        end)
+      end)
+     else --xxx.dismiss()
+    end
+  end;
+  取消.onClick=function()
+    xxx.dismiss()
+  end;
+  确认.foreground=波纹特效v2(0xFFCECECE)
+  取消.foreground=波纹特效v2(0xFFCECECE)
+end
+设置一言()
+
+名称数据={"皮卡丘捏脸",
+  "蔡徐坤打球",
+  "Nike彩色",
+  '哔哩哔哩',
+  "派大星健身",
+  "简约风",
+  "晚霞",
+  "极简",
+  "MaskHate",
+  "雅茶白",
+  "史小坑",
+  "指针",
+}
+
+图片路径={}
+for i=1,#名称数据 do
+  table.insert(图片路径,"res/"..i..".png")
+end
+
+链接={"https://aweqy.lanzouu.com/iiZS605zl8kf",
+  "https://aweqy.lanzouu.com/i6mY105zl6mf",
+  "https://aweqy.lanzouu.com/i8a4Y05zl9ij",
+  "https://aweqy.lanzouu.com/igcBT05zl4vc",
+  "https://aweqy.lanzouu.com/ijRsn05zl8di",
+  "https://aweqy.lanzouu.com/i8kPU062hqre",
+  "https://aweqy.lanzouu.com/iSZ7n05zl8yj",
+  "https://aweqy.lanzouu.com/iDIJv05zl7va",
+  "https://aweqy.lanzouu.com/i16qi05zl9cd",
+  "https://aweqy.lanzouu.com/iM6G005zl97i",
+  "https://aweqy.lanzouu.com/i8XOr05zl8sd",
+  "https://aweqy.lanzouu.com/iLy9e05zrkjc",
+}
+
+adapter=LuaAdapter(this,data,items)
+for i=1,#名称数据 do
+  q=图片路径[i]
+  l=名称数据[i]
+  w=链接[i]
+  adapter.add{img=q,title=l,title2=q,title3=w}
+end
+表盘列表.Adapter=adapter
+表盘列表.onItemClick=function(adp,v,pos,id)
+  表盘名称=v.Tag.title.Text
+  图片链接=v.Tag.title2.Text
+  文件链接=v.Tag.title3.Text
+  if 图片链接:match('(.+)www')=="https://" then
+    下载表盘2(表盘名称,文件链接,图片链接,[[表盘均摘自网络，侵删~
+联系QQ2049898109
+下载的表盘自动添加到<我的表盘>]],高度)
+   else
+    下载表盘(表盘名称,文件链接,图片链接,[[表盘均摘自网络，侵删~
+联系QQ2049898109
+下载的表盘自动添加到<我的表盘>]],高度)
+  end
+end
+
+页数=0
+
+pull.onLoadMore=function(v)
+  页数=页数+1
+  url_="https://share.weiyun.com/XyBZ1Loq"
+  Http.get(url_,function(a,b)
+    if a==200 then
+      页数2=b:match([[>页数【(.-)】]])
+      if 页数 > tonumber(页数2) then
+        v.loadmoreFinish(0)
+        Toast.makeText(activity,"到底了~", Toast.LENGTH_LONG).show()
+       else
+        v.loadmoreFinish(0)
+        数量=tonumber(b:match([[>数量【(.-)】]]))
+        名称数据_={}
+        图片路径_={}
+        链接_={}
+        for i=1,数量 do
+          表盘名称=b:match('>'..页数..'表盘'..i..'名称【(.-)】')
+          table.insert(名称数据_,表盘名称)
+        end
+        for i=1,数量 do
+          表盘图片链接=b:match('>'..页数..'表盘'..i..'图片链接【(.-)】')
+          table.insert(图片路径_,表盘图片链接)
+        end
+        for i=1,数量 do
+          表盘下载链接=b:match('>'..页数..'表盘'..i..'下载链接【(.-)】')
+          table.insert(链接_,表盘下载链接)
+        end
+        for i=1 , #名称数据_ do
+          l=名称数据_[i]
+          q=图片路径_[i]
+          w=链接_[i]
+          adapter.add{img=q,title=l,title2=q,title3=w}
+        end
+        adapter.notifyDataSetChanged()
+      end
+     else
+      Toast.makeText(activity,"请检查网络", Toast.LENGTH_LONG).show()
+    end
+  end)
+end

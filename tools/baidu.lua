@@ -1,0 +1,221 @@
+require "import"
+import "android.app.*"
+import "android.os.*"
+import "android.widget.*"
+import "android.view.*"
+import "function"
+
+import "android.content.Context"
+import "android.view.inputmethod.InputMethodManager"
+
+activity.setTheme(R.Theme_Teal)
+layout={
+  LinearLayout;
+  layout_height="match_parent";
+  layout_width="match_parent";
+  orientation="vertical";
+  {
+    CardView;
+    backgroundColor="0xFFFFFFFF";
+    CardElevation="0dp";
+    radius="0dp";
+    layout_height="wrap";
+    layout_width="match_parent";
+    id='titlebar',
+    {
+      LinearLayout;
+      layout_width="match_parent";
+      layout_marginTop="30dp";
+      {
+        LinearLayout;
+        gravity="center";
+        layout_height="8%h";
+        layout_width="fill";
+        orientation="horizontal";
+        layout_marginLeft="15dp";
+        {
+          CardView;
+          layout_width="58dp";
+          radius="33dp";
+          CardElevation="0dp";
+          layout_height="58dp";
+          UseCompatPadding=false;
+          PreventCornerOverlap=false;
+          background="#00000000";
+          {
+            ImageView;
+            padding="27dp";
+            layout_width="match_parent";
+            src="icon/finish.png";
+            layout_height="match_parent";
+            layout_margin="-10dp";
+            id="img";
+            background="#00000000";
+          };
+        };
+        {
+          LinearLayout;
+          layout_height="match_parent";
+          layout_width="70%w";
+          orientation="vertical";
+          layout_marginLeft="5dp";
+          {
+            TextView;
+            textColor="#757575";
+            textSize="23dp";
+            layout_height="20dp";
+            layout_width="match_parent";
+            id="title";
+            gravity="center|left";
+            layout_weight="1";
+            singleLine=true;
+            text="浏览器";
+          };
+          {
+            TextView;
+            textColor="#a5a5a5";
+            textSize="13dp";
+            layout_height="10dp";
+            layout_width="match_parent";
+            id="yiyan";
+            gravity="center|left";
+            layout_weight="1";
+            singleLine=true;
+            text="百度搜索且支持输入网址";
+          };
+        };
+        {
+          CardView;
+          layout_width="58dp";
+          radius="33dp";
+          CardElevation="0dp";
+          layout_height="58dp";
+          UseCompatPadding=false;
+          PreventCornerOverlap=false;
+          background="#00000000";
+          {
+            TextView;
+            layout_marginLeft="-150dp";
+            layout_width="0dp";
+            layout_marginTop="60dp";
+            backgroundColor="0xffffffff";
+            layout_height="0dp";
+            id="menu";
+            textColor="#757575";
+          };
+          {
+            ImageView;
+            padding="27dp";
+            layout_width="match_parent";
+            src="icon/Other.png";
+            layout_height="match_parent";
+            layout_margin="-10dp";
+            id="img2";
+            background="#00000000";
+          };
+        };
+      };
+    };
+  };
+  {
+    FrameLayout,
+    layout_width="fill",
+    layout_weight="1",
+    {
+      LuaWebView,
+      layout_width="fill",
+      layout_height="fill",
+      id="myWebView",
+    },
+    {
+      LinearLayout,
+      layout_width="fill",
+      layout_height="fill",
+      background="#FFFFFFFF",
+      Gravity="center|top",
+      orientation="vertical",
+      clickable="true",
+      id="SearchViewLayout",
+      {
+        CircleImageView,
+        layout_marginTop="5%h",
+        layout_width="100%w",
+        layout_height="15%h",
+        src="icon/user.png",
+      },
+      {
+        CardView,
+        layout_marginTop="20dp",
+        layout_width="85%w",
+        layout_height="44dp",
+        radius="22dp",
+        cardElevation="0",
+        background="#FFEAEAEA",
+
+        {
+          LinearLayout,
+          layout_width="fill",
+          layout_height="44dp",
+          {
+            EditText,
+            layout_weight="1",
+            layout_height="44dp",
+            background="#00000000",
+            paddingLeft="20dp",
+            textColor="#FF808080",
+            singleLine="true",
+            id="SearchViewEditText",
+          },
+          {
+            ImageView,
+            layout_width="44dp",
+            layout_height="44dp",
+            padding="12dp",
+            colorFilter="#80808080",
+            src="icon/send.png",
+            id="MyViewGo",
+          },
+        },
+      },
+    },
+  },
+}
+activity.ActionBar.hide()
+activity.setContentView(loadlayout(layout))
+设置一言()
+状态栏()
+
+webSettings=myWebView.getSettings();
+APP_NAME_UA="Mozilla/5.0 (Linux; Android 7.0; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/48.0.2564.116 Mobile Safari/537.36 T7/10.3 SearchCraft/2.6.2 (Baidu; P1 7.0)"
+webSettings.setUserAgentString(webSettings.getUserAgentString()..APP_NAME_UA);
+myWebView.requestFocusFromTouch()
+webSettings.setTextZoom(100)
+
+MyViewGo.onClick=function()
+  if SearchViewEditText.Text:match('(.+)://')==nil then
+    SearchViewLayout.setVisibility(View.INVISIBLE)
+    myWebView.loadUrl("https://m.baidu.com/s?word="..SearchViewEditText.Text)
+   elseif SearchViewEditText.Text:match('(.+)://')=="http" or "Http" or "https" or 'Https' then
+    SearchViewLayout.setVisibility(View.INVISIBLE)
+    myWebView.loadUrl(SearchViewEditText.Text)
+  end
+end
+
+pop=PopupMenu(activity,menu)
+menu=pop.Menu
+menu.add("回到首页").onMenuItemClick=function(v)
+  SearchViewLayout.setVisibility(View.VISIBLE)
+end
+menu.add("隐藏标题栏").onMenuItemClick=function(v)
+  titlebar.setVisibility(View.GONE)
+end
+menu.add("复制网址").onMenuItemClick=function(v)
+  写入剪切板(myWebView.getUrl())
+  提示("已复制链接")
+end
+img2.onClick=function()
+  pop.show()
+end
+img.onClick=function()
+  activity.finish()
+end
